@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply antialiased;
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+  }
+}
+
+/* Responsive table: collapses into stacked cards on mobile */
+@layer components {
+  .responsive-table {
+    @apply overflow-hidden rounded-2xl border border-cream-300 bg-white shadow-soft;
+  }
+
+  .responsive-table .rt-scroll {
+    @apply overflow-x-auto;
+  }
+
+  .responsive-table table {
+    @apply w-full text-left text-sm;
+  }
+
+  .responsive-table thead {
+    @apply hidden lg:table-header-group;
+  }
+
+  .responsive-table thead tr {
+    @apply border-b border-cream-300 bg-cream-100/60;
+  }
+
+  .responsive-table thead th {
+    @apply px-5 py-3 text-xs font-semibold uppercase tracking-wide text-chocolate-500 whitespace-nowrap;
+  }
+
+  .responsive-table tbody {
+    @apply divide-y divide-cream-200;
+  }
+
+  /* Desktop: normal table rows */
+  @media (min-width: 1024px) {
+    .responsive-table tbody tr {
+      @apply transition-colors hover:bg-cream-50;
+    }
+    .responsive-table td {
+      @apply px-5 py-3.5 align-middle text-chocolate-600;
+    }
+    .responsive-table td.rt-primary {
+      @apply font-medium text-chocolate-900;
+    }
+  }
+
+  /* Mobile: each row becomes a card, each cell becomes a labeled block */
+  @media (max-width: 1023px) {
+    .responsive-table table {
+      @apply block w-full;
+    }
+    .responsive-table thead {
+      @apply hidden;
+    }
+    .responsive-table tbody {
+      @apply block;
+    }
+    .responsive-table tbody tr {
+      @apply mb-3 block rounded-xl border border-cream-200 bg-cream-50/50 p-4;
+    }
+    .responsive-table tbody tr:last-child {
+      @apply mb-0;
+    }
+    .responsive-table td {
+      @apply block border-0 py-2 px-0 text-chocolate-600;
+    }
+    .responsive-table td::before {
+      @apply block text-xs font-semibold uppercase tracking-wide text-chocolate-400;
+      content: attr(data-label);
+      margin-bottom: 0.25rem;
+    }
+    .responsive-table td.rt-primary {
+      @apply font-semibold text-chocolate-900 text-base;
+    }
+    .responsive-table td.rt-primary::before {
+      @apply sr-only;
+    }
+  }
+}
+
+/* Hide scrollbar utility for horizontal tab strips */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Safe-area padding for bottom nav on devices with home indicator */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
